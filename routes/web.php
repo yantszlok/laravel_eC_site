@@ -9,6 +9,7 @@ use App\Http\Controllers\BrandController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\WishlistController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\PaymentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -90,8 +91,31 @@ Route::get('check', [CartController::class, 'Check']);
 Route::get('product/cart', [CartController::class, 'ShowCart'])->name('show.cart');
 Route::get('remove/cart/{rowId}', [CartController::class, 'RemoveCart']);
 
-Route::post('update/cart/item}', [CartController::class, 'UpdateCart'])->name('update.cartitem');
+Route::post('update/cart/item', [CartController::class, 'UpdateCart'])->name('update.cartitem');
+
+Route::get('/cart/product/view/{id}', [CartController::class, 'ViewProduct']);
+Route::post('insert/into/cart/', [CartController::class, 'InsertCart'])->name('insert.into.cart');
+
+Route::get('user/checkout', [CartController::class, 'CheckOut'])->name('user.checkout');
+
+Route::get('user/wishlist', [CartController::class, 'Wishlist'])->name('user.wishlist');
+
+
+
 Route::get('product/details/{id}/{product_name}', [ProductController::class, 'ProductView']);
 
 
+
+
 Route::post('cart/product/add/{id}', [ProductController::class, 'AddCart']);
+
+
+//Payment Step
+
+Route::get('payment/page', [CartController::class, 'PaymentPage'])->name('payment.step');
+Route::post('user/payment/process', [PaymentController::class, 'Payment'])->name('payment.process');
+Route::post('user/stripe/charge', [PaymentController::class, 'StripeCharge'])->name('stripe.charge');
+
+
+//Product detail shope page
+Route::get('product/{id}', [ProductController::class, 'CategoryProductView']);

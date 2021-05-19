@@ -2,6 +2,15 @@
 
 @section('content')
 @include('layouts.menubar')
+
+@php
+$setting = DB::table('settings')->first();
+$charge = $setting->shipping_charge;
+$vat = $setting->vat;
+@endphp
+
+
+
 <link rel="stylesheet" type="text/css" href="{{ asset ('frontend/styles/cart_styles.css')}}">
 <link rel="stylesheet" type="text/css" href="{{ asset ('frontend/styles/cart_responsive.css')}}">
 
@@ -13,7 +22,7 @@
 			<div class="row">
 				<div class="col-lg-12 ">
 					<div class="cart_container">
-						<div class="cart_title">Shopping Cart</div>
+						<div class="cart_title">Check Out</div>
 						<div class="cart_items">
 							<ul class="cart_list">
 
@@ -52,12 +61,7 @@
                                     <div class="cart_item_text">{{$row->qty}}</div>
 
 
-                                    <form method ="post" action="{{route('update.cartitem')}}">
-                                        @csrf
-                                        <input type="hidden" name="productid" value="{{$row->rowId }}">
-                                        <input type="number" name="qty" value="{{$row->qty}}" style="width: 50px;">
-                                        <button type="submit"class="btn btn-success btn-sm"><i class ="fas fa-check-square"></i></button>
-                                    </form>
+                                   
 
 
 
@@ -70,10 +74,7 @@
                                     <div class="cart_item_title">Total</div>
                                     <div class="cart_item_text">{{$row->price * $row->qty}}</div>
                                 </div>
-                                <div class="cart_item_total cart_info_col">
-					                <div class="cart_item_title">Action</div><br>
-	                                <a href="{{ url('remove/cart/'.$row->rowId ) }}" class="btn btn-sm btn-danger">x</a>
-				            </div>
+                                
                             </div>
                         </li>
                                 @endforeach
@@ -81,18 +82,23 @@
 						</div>
 						
 						<!-- Order Total -->
-						<div class="order_total">
-							<div class="order_total_content text-md-right">
-								<div class="order_total_title">Order Total:</div>
-								<div class="order_total_amount">${{Cart::Subtotal()}}</div>
-							</div>
-						</div>
+                        <br><br><br>
 
+
+
+
+                        <ul class ="list-group col-lg-4" style= "float: right;">
+                            <il class ="list-group-item">Subtotal :<span style="float: right;">${{ Cart::Subtotal()}}</span></il>
+                            <il class ="list-group-item">Shipping Charge :<span style="float: right;">${{$charge}}</span></il>
+                            <il class ="list-group-item">Tax :<span style="float: right;">${{Cart::tax()}}</span></il>
+                            <il class ="list-group-item">Total :<span style="float: right;">${{Cart::total() + $charge }}</span></il>
+                        
+                        
+                        </ul>
+                        <br><br><br><br><br><br><br><br><br>
 						<div class="cart_buttons">
-                        <button type="{{ url('/')}}" class="button cart_button_clear">Back</button>
-							<button type="button" class="button cart_button_clear">All Cancel</button>
-							<a href ="{{ route('user.checkout')}}" class="button cart_button_checkout">Check Out</a>
-                            
+                            <a href ="{{ route('show.cart')}}" class="button cart_button_clear">Back to Shopping Cart</a>
+							<a href ="{{ route('payment.step')}}" class="button cart_button_checkout">Final Step</a>
 						</div>
 					</div>
 				</div>

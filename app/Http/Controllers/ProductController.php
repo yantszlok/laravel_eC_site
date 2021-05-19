@@ -38,6 +38,7 @@ class ProductController extends Controller
     $data['product_name'] = $request->product_name;
     $data['product_code'] = $request->product_code;
     $data['product_quantity'] = $request->product_quantity;
+    
     $data['category_id'] = $request->category_id;
     $data['brand_id'] = $request->brand_id;
     $data['product_size'] = $request->product_size;
@@ -288,6 +289,20 @@ $data = array();
                 return redirect()->back()->with($notification);
        
         } 
+    }
+
+
+    public function CategoryProductView($id){
+
+        $products = DB::table('products')->where('category_id',$id)->paginate(10);
+
+        $categories = DB::table('categories')->get();
+
+        $brands = DB::table('products')->where('category_id',$id)->select('brand_id')->groupBy('brand_id')->get();
+
+
+        return view('pages.all_products',compact('products','categories','brands'));
+
     }
 
 }

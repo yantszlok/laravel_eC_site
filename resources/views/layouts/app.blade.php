@@ -15,7 +15,9 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('frontend/styles/main_styles.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('frontend/styles/responsive.css') }}">
 <script src="sweetalert2.min.js"></script>
-<link rel="stylesheet" href="sweetalert2.min.css">
+<link rel="stylesheet" href="css/sweetalert2.min.css">
+
+<script src="https://js.stripe.com/v3/"></script>
 
 </head>
 
@@ -131,7 +133,7 @@ $category = DB::table('categories')->get();
                                 @php
                                     $wishlist = DB::table('wishlists')->where('user_id',Auth::id())->get();
                                 @endphp
-                                    <div class="wishlist_text"><a href="#">Wishlist</a></div>
+                                    <div class="wishlist_text"><a href="{{ route('user.wishlist')}}">Wishlist</a></div>
                                     <div class="wishlist_count">{{ count($wishlist)}}</div>
                                 </div>
                             </div>
@@ -281,7 +283,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 <script src="{{ asset('frontend/js/custom.js')}}"></script>
 
 <script src="{{ asset('frontend/js/product_custom.js')}}"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script> 
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script src="{{ asset('https://unpkg.com/sweetalert/dist/sweetalert.min.js')}}"></script>

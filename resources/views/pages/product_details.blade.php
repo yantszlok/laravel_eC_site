@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-
+@include('layouts.menubar')
 
 <link rel="stylesheet" type="text/css" href="{{ asset('frontend/styles/product_styles.css')}}">
 <link rel="stylesheet" type="text/css" href="{{ asset('frontend/styles/product_responsive.css')}}">
@@ -24,7 +24,7 @@
 
 				<!-- Selected Image -->
 				<div class="col-lg-5 order-lg-2 order-1">
-					<div class="image_selected"><img src="images/single_4.jpg" alt=""></div>
+					<div class="image_selected"><img src="{{asset($product->image_one)}}" alt=""></div>
 				</div>
 
 				<!-- Description -->
